@@ -31,22 +31,17 @@ func SolvePartTwo() string {
 		lastDigitStr := getLastDigit(line)
 
 		if _, err := strconv.Atoi(firstDigitStr); err != nil {
-			fmt.Printf("could not convert first digit to int: %w", err)
-			os.Exit(1)
+			log.Fatalf("could not convert first digit to int: %s", err)
 		}
 		if _, err := strconv.Atoi(lastDigitStr); err != nil {
-			fmt.Printf("could not convert last digit to int: %w", err)
-			os.Exit(1)
+			log.Fatalf("could not convert last digit to int: %s", err)
 		}
 
 		concatDigits := firstDigitStr + lastDigitStr
 		sum, err := strconv.Atoi(concatDigits)
 		if err != nil {
-			fmt.Printf("could not convert concat digits to int: %w", err)
-			os.Exit(1)
+			log.Fatalf("could not convert concat digits to int: %s", err)
 		}
-
-		fmt.Println(concatDigits)
 
 		total += sum
 	}
@@ -55,52 +50,88 @@ func SolvePartTwo() string {
 }
 
 func getFirstDigit(line string) string {
-	possibleDigitWords := make([]string, len(digitWords))
-
-	copy(possibleDigitWords, digitWords)
-	indexForNextLetterOfDigitWord := 0
-
-	for _, char := range line {
+	for i, char := range line {
 
 		// If we find a string representation of a number (1, 2, 3...) we found it
 		if _, err := strconv.Atoi(string(char)); err == nil {
 			return string(char)
 		}
 
-		// Otherwise we have to keep checking for ("one", "two"...)
-		possibleDigitWords = getPossibleDigitWords(possibleDigitWords, char, indexForNextLetterOfDigitWord)
-
-		if len(possibleDigitWords) == 0 {
-			fmt.Println("found no words")
-			copy(possibleDigitWords, digitWords)
-			indexForNextLetterOfDigitWord = 0
-			continue
-		} else if len(possibleDigitWords) == 1 && len(possibleDigitWords[0]) == indexForNextLetterOfDigitWord {
-			return possibleDigitWords[0]
-		} else {
-			indexForNextLetterOfDigitWord++
+		// Otherwise we have to check for words ("one", "two"...)
+		if num := numWordThatStartsAtIndex(line[i:]); num != "" {
+			return num
 		}
 	}
 
-	fmt.Println("hit end of line without finding a digit")
-	os.Exit(1)
+	log.Fatal("hit end of line without finding a digit")
 
 	return ""
 }
 
-func getPossibleDigitWords(words []string, char rune, index int) (possibleWords []string) {
-	fmt.Println("words:", words)
-	fmt.Println("char:", string(char))
-	fmt.Println("index:", index)
-	for _, word := range words {
-		if index < len(word) && string(word[index]) == string(char) {
-			possibleWords = append(possibleWords, word)
+func numWordThatStartsAtIndex(partialLine string) string {
+	possibleDigitWords := make([]string, len(digitWords))
+	copy(possibleDigitWords, digitWords)
+
+	for i, char := range partialLine {
+
+		stillValidDigitWords := []string{}
+
+		for _, word := range possibleDigitWords {
+			if i < len(word) && string(word[i]) == string(char) {
+				if i == len(word)-1 {
+					switch possibleDigitWords[0] {
+					case "one":
+						return "1"
+					case "two":
+						return "2"
+					case "three":
+						return "3"
+					case "four":
+						return "4"
+					case "five":
+						return "5"
+					case "six":
+						return "6"
+					case "seven":
+						return "7"
+					case "eight":
+						return "8"
+					case "nine":
+						return "9"
+					}
+				}
+
+				stillValidDigitWords = append(stillValidDigitWords, word)
+			}
 		}
+
+		if len(possibleDigitWords) == 0 {
+			return ""
+		}
+
+		possibleDigitWords = stillValidDigitWords
 	}
 
-	return
+	return ""
 }
 
 func getLastDigit(line string) string {
-	return "0"
+	for i := len(line) - 1; i >= 0; i-- {
+
+		char := line[i]
+
+		// If we find a string representation of a number (1, 2, 3...) we found it
+		if _, err := strconv.Atoi(string(char)); err == nil {
+			return string(char)
+		}
+
+		// Otherwise we have to check for words ("one", "two"...)
+		if num := numWordThatStartsAtIndex(line[i:]); num != "" {
+			return num
+		}
+	}
+
+	log.Fatal("hit end of line without finding a digit")
+
+	return ""
 }
