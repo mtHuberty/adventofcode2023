@@ -55,10 +55,10 @@ func SolvePartOne() string {
 
 				colorResultSplit := strings.Split(colorResult, " ") // [ "12", "blue" ]
 
-				cubeCountStr := colorResultSplit[0]
-				cubeColor := colorResultSplit[1]
+				cubeCountStr := colorResultSplit[0] // "12"
+				cubeColor := colorResultSplit[1]    // "blue"
 
-				cubeCount, err := strconv.Atoi(cubeCountStr)
+				cubeCount, err := strconv.Atoi(cubeCountStr) // 12
 				if err != nil {
 					log.Fatalf("error converting cubeCountStr %s to int: %s", cubeCountStr, err)
 				}
