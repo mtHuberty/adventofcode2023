@@ -22,7 +22,7 @@ import (
 // for processing multiple strings simultaneously.
 
 func SolvePartOne() string {
-	file, err := os.Open("one/input.txt")
+	file, err := os.Open("./days/one/input.txt")
 	if err != nil {
 		log.Fatal(fmt.Errorf("could not open file: %w", err))
 	}

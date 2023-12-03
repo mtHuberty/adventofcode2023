@@ -13,7 +13,7 @@ var digitWords = []string{"one", "two", "three",
 	"seven", "eight", "nine"}
 
 func SolvePartTwo() string {
-	file, err := os.Open("one/input.txt")
+	file, err := os.Open("./days/one/input.txt")
 	if err != nil {
 		log.Fatal(fmt.Errorf("could not open file: %w", err))
 	}
@@ -51,6 +51,27 @@ func SolvePartTwo() string {
 
 func getFirstDigit(line string) string {
 	for i, char := range line {
+
+		// If we find a string representation of a number (1, 2, 3...) we found it
+		if _, err := strconv.Atoi(string(char)); err == nil {
+			return string(char)
+		}
+
+		// Otherwise we have to check for words ("one", "two"...)
+		if num := numWordThatStartsAtIndex(line[i:]); num != "" {
+			return num
+		}
+	}
+
+	log.Fatal("hit end of line without finding a digit")
+
+	return ""
+}
+
+func getLastDigit(line string) string {
+	for i := len(line) - 1; i >= 0; i-- {
+
+		char := line[i]
 
 		// If we find a string representation of a number (1, 2, 3...) we found it
 		if _, err := strconv.Atoi(string(char)); err == nil {
@@ -111,27 +132,6 @@ func numWordThatStartsAtIndex(partialLine string) string {
 
 		possibleDigitWords = stillValidDigitWords
 	}
-
-	return ""
-}
-
-func getLastDigit(line string) string {
-	for i := len(line) - 1; i >= 0; i-- {
-
-		char := line[i]
-
-		// If we find a string representation of a number (1, 2, 3...) we found it
-		if _, err := strconv.Atoi(string(char)); err == nil {
-			return string(char)
-		}
-
-		// Otherwise we have to check for words ("one", "two"...)
-		if num := numWordThatStartsAtIndex(line[i:]); num != "" {
-			return num
-		}
-	}
-
-	log.Fatal("hit end of line without finding a digit")
 
 	return ""
 }
