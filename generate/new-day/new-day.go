@@ -66,4 +66,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	inputFile, err := os.Create("../../days/" + packageName + "/input.txt")
+	if err != nil {
+		panic(err)
+	}
+	defer inputFile.Close()
 }
