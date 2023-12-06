@@ -1,5 +1,3 @@
-// template.go.tpl
-
 package three
 
 import (
