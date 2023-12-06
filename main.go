@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
     "log"
+    "github.com/mtHuberty/adventofcode2023/days/three"
     "github.com/mtHuberty/adventofcode2023/days/one"
     "github.com/mtHuberty/adventofcode2023/days/two"
 )
@@ -16,6 +17,15 @@ func main() {
 	}
 
     switch args[0] {
+    case "three":
+        switch args[1] {
+        case "one":
+            fmt.Println(three.SolvePartOne())
+        case "two":
+            fmt.Println(three.SolvePartTwo())
+        default:
+            log.Fatal("Unknown second argument")
+        }
     case "one":
         switch args[1] {
         case "one":
