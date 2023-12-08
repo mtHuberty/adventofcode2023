@@ -7,6 +7,7 @@ import (
     "github.com/mtHuberty/adventofcode2023/days/three"
     "github.com/mtHuberty/adventofcode2023/days/one"
     "github.com/mtHuberty/adventofcode2023/days/two"
+    "github.com/mtHuberty/adventofcode2023/days/five"
     "github.com/mtHuberty/adventofcode2023/days/four"
 )
 
@@ -42,6 +43,15 @@ func main() {
             fmt.Println(two.SolvePartOne())
         case "two":
             fmt.Println(two.SolvePartTwo())
+        default:
+            log.Fatal("Unknown second argument")
+        }
+    case "five":
+        switch args[1] {
+        case "one":
+            fmt.Println(five.SolvePartOne())
+        case "two":
+            fmt.Println(five.SolvePartTwo())
         default:
             log.Fatal("Unknown second argument")
         }
