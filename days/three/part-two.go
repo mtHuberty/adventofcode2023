@@ -5,6 +5,7 @@ import (
 )
 
 func SolvePartTwo() string {
+	readFile()
 	total := 0
 
 	for y, row := range sm.matrix {

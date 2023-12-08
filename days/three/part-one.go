@@ -13,7 +13,7 @@ type schematicMatrix struct {
 	matrix [][]string
 }
 
-func init() {
+func readFile() {
 	scanner := util.NewScanner("./days/three/input.txt")
 
 	defer scanner.Close()
@@ -44,6 +44,7 @@ var sm schematicMatrix
 // . . . * 2 3 4 . .
 // 5 . 4 4 2 4 . . .
 func SolvePartOne() string {
+	readFile()
 	scanner := util.NewScanner("./days/three/input.txt")
 
 	defer scanner.Close()

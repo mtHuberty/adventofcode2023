@@ -11,7 +11,7 @@ import (
 
 var linesOne []string
 
-func init() {
+func readFileOne() {
 	scanner := util.NewScanner("./days/five/input.txt")
 
 	defer scanner.Close()
@@ -32,6 +32,7 @@ type conversionInfo struct {
 type conversionMap map[string][]conversionInfo
 
 func SolvePartOne() string {
+	readFileOne()
 	var sourceNums []int
 
 	mapKey := ""

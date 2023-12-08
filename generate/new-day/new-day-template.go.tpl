@@ -8,7 +8,7 @@ import (
 
 var lines{{.Part}} []string
 
-func init() {
+func readFile() {
 	scanner := util.NewScanner("./days/{{.PackageName}}/input.txt")
 
 	defer scanner.Close()
