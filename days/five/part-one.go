@@ -1,6 +1,7 @@
 package five
 
 import (
+	"fmt"
 	"regexp"
 	"sort"
 	"strconv"
@@ -120,6 +121,7 @@ func handleFirstLine(line string) []int {
 
 // Recursively converts sourceNum of type sourceType through to the final type
 func convertSourceToDest(sourceNum int, sourceType string, cmap *conversionMap) int {
+	fmt.Printf("converting sourceNum %d of type %s to dest", sourceNum, sourceType)
 	if cmap == nil {
 		panic("conversionMap can't be nil")
 	}
@@ -132,7 +134,6 @@ func convertSourceToDest(sourceNum int, sourceType string, cmap *conversionMap) 
 
 			for _, conversionInfo := range conversionInfos {
 				if sourceNum >= conversionInfo.sourceStart && sourceNum <= conversionInfo.sourceStart+conversionInfo.rangeLen {
-					// fmt.Printf("found sourceNum %d in between %d and %d\n", sourceNum, conversionInfo.sourceStart, conversionInfo.sourceStart+conversionInfo.rangeLen)
 					destNum := (sourceNum - conversionInfo.sourceStart) + conversionInfo.destStart
 					return convertSourceToDest(destNum, destType, cmap)
 				}

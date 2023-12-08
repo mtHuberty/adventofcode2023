@@ -8,7 +8,7 @@ import (
 
 var lines{{.Part}} []string
 
-func readFile() {
+func readFile{{.Part}}() {
 	scanner := util.NewScanner("./days/{{.PackageName}}/input.txt")
 
 	defer scanner.Close()
@@ -20,5 +20,6 @@ func readFile() {
 }
 
 func SolvePart{{.Part}}() string {
+	readFile{{.Part}}()
 	return fmt.Sprintf("Counted %d input lines", len(lines{{.Part}}))
 }
